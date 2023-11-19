@@ -3671,11 +3671,39 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 3937026795308608217, guid: f529a759870dfc442be0c578171aab00, type: 3}
       propertyPath: m_Name
-      value: FPSPlayer
+      value: Player
+      objectReference: {fileID: 0}
+    - target: {fileID: 6772018525889869202, guid: f529a759870dfc442be0c578171aab00, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 0.329
       objectReference: {fileID: 0}
     - target: {fileID: 6772018525889869202, guid: f529a759870dfc442be0c578171aab00, type: 3}
       propertyPath: m_LocalPosition.y
-      value: 1.57
+      value: 1.89
+      objectReference: {fileID: 0}
+    - target: {fileID: 6772018525889869202, guid: f529a759870dfc442be0c578171aab00, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: -3.703
+      objectReference: {fileID: 0}
+    - target: {fileID: 6772018525889869202, guid: f529a759870dfc442be0c578171aab00, type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 0.9987501
+      objectReference: {fileID: 0}
+    - target: {fileID: 6772018525889869202, guid: f529a759870dfc442be0c578171aab00, type: 3}
+      propertyPath: m_LocalRotation.x
+      value: 0.049982876
+      objectReference: {fileID: 0}
+    - target: {fileID: 6772018525889869202, guid: f529a759870dfc442be0c578171aab00, type: 3}
+      propertyPath: m_LocalRotation.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6772018525889869202, guid: f529a759870dfc442be0c578171aab00, type: 3}
+      propertyPath: m_LocalRotation.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6772018525889869202, guid: f529a759870dfc442be0c578171aab00, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 5.73
       objectReference: {fileID: 0}
     - target: {fileID: 6772018526520652680, guid: f529a759870dfc442be0c578171aab00, type: 3}
       propertyPath: jumpSpeed
