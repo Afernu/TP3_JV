@@ -68,7 +68,7 @@ public class Switch : MonoBehaviour, IInteractable
         }
 
         arch.position = end;
-        surface.BuildNavMesh();
+        //surface.BuildNavMesh();
     }
 
 }
