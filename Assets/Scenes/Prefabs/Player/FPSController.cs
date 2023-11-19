@@ -23,9 +23,12 @@ public class FPSController : MonoBehaviour
     [HideInInspector]
     public bool canMove = true;
 
+    private Animator animator;
+
     void Start()
     {
         characterController = GetComponent<CharacterController>();
+        animator = GetComponentInChildren<Animator>();
 
         // Vérouille le curseur
         Cursor.lockState = CursorLockMode.Locked;
@@ -38,10 +41,19 @@ public class FPSController : MonoBehaviour
         Vector3 forward = transform.TransformDirection(Vector3.forward);
         Vector3 right = transform.TransformDirection(Vector3.right);
 
+        float horizontalInput = Input.GetAxis("Horizontal");
+        float verticalInput = Input.GetAxis("Vertical");
+
         // Appuyer sur "Left Shift" permet de courir
         bool isRunning = Input.GetKey(KeyCode.LeftShift);
-        float curSpeedX = canMove ? (isRunning ? runningSpeed : walkingSpeed) * Input.GetAxis("Vertical") : 0;
-        float curSpeedY = canMove ? (isRunning ? runningSpeed : walkingSpeed) * Input.GetAxis("Horizontal") : 0;
+
+        if (isRunning && characterController.isGrounded)
+            animator.SetBool("IsRunning", true);
+        else
+            animator.SetBool("IsRunning", false);
+
+        float curSpeedX = canMove ? (isRunning ? runningSpeed : walkingSpeed) * verticalInput : 0;
+        float curSpeedY = canMove ? (isRunning ? runningSpeed : walkingSpeed) * horizontalInput : 0;
         float movementDirectionY = moveDirection.y;
         moveDirection = (forward * curSpeedX) + (right * curSpeedY);
 
@@ -49,10 +61,18 @@ public class FPSController : MonoBehaviour
         if (Input.GetButton("Jump") && canMove && characterController.isGrounded)
         {
             moveDirection.y = jumpSpeed;
+            if (animator != null)
+            {
+                animator.SetBool("IsJumping", true); // Set IsJumping to true when jumping
+            }
         }
         else
         {
             moveDirection.y = movementDirectionY;
+            if (animator != null)
+            {
+                animator.SetBool("IsJumping", false); // Set IsJumping to false when not jumping
+            }
         }
 
         // Applique la gravité lorsque le joueur ne touche pas au sol
@@ -72,5 +92,14 @@ public class FPSController : MonoBehaviour
             playerCamera.transform.localRotation = Quaternion.Euler(rotationX, 0, 0);
             transform.rotation *= Quaternion.Euler(0, Input.GetAxis("Mouse X") * lookSpeed, 0);
         }
+
+        if (animator != null)
+        {
+            animator.SetFloat("Horizontal", horizontalInput);
+            animator.SetFloat("Vertical", verticalInput);
+
+
+        }
+
     }
 }
