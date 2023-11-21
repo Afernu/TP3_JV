@@ -13,19 +13,19 @@ public class Switch : MonoBehaviour, IInteractable
     private bool isUp = true;
 
     [SerializeField] private float rotationAngle = -90;
-    [SerializeField] private float rotationSpeed = 8.0f;
+    [SerializeField] private float rotationSpeed = 1.0f;
 
-    [SerializeField] private Transform arch;
+    [SerializeField] private Transform obj;
     [SerializeField] private Vector3 initialPosition;
     [SerializeField] private Vector3 targetPosition;
-    [SerializeField] private float archMoveDuration = 2.0f;
+    [SerializeField] private float moveDuration = 2.0f;
 
     [SerializeField] private NavMeshSurface surface;
 
     void Start()
     {
-        initialPosition = arch.position;
-        targetPosition = initialPosition + Vector3.down * 5;
+        initialPosition = obj.position;
+        targetPosition = new Vector3(initialPosition.x, initialPosition.y, initialPosition.z - 4);
         lever = transform.Find("Lever").gameObject;
     }
 
@@ -39,7 +39,7 @@ public class Switch : MonoBehaviour, IInteractable
             {
                 lever.transform.rotation = targetRotation;
                 isRotating = false;
-                StartCoroutine(MoveArch());
+                StartCoroutine(MoveObject());
             }
         }
     }
@@ -54,21 +54,21 @@ public class Switch : MonoBehaviour, IInteractable
         }
     }
 
-    IEnumerator MoveArch()
+    IEnumerator MoveObject()
     {
         float elapsedTime = 0;
-        Vector3 start = arch.position;
+        Vector3 start = obj.position;
         Vector3 end = isUp ? initialPosition : targetPosition;
 
-        while (elapsedTime < archMoveDuration)
+        while (elapsedTime < moveDuration)
         {
-            arch.position = Vector3.Lerp(start, end, elapsedTime / archMoveDuration);
+            obj.position = Vector3.Lerp(start, end, elapsedTime / moveDuration);
             elapsedTime += Time.deltaTime;
             yield return null;
         }
 
-        arch.position = end;
-        //surface.BuildNavMesh();
+        obj.position = end;
+        surface.BuildNavMesh();
     }
 
 }
