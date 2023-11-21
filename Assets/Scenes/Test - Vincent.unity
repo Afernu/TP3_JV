@@ -497,6 +497,10 @@ PrefabInstance:
     m_TransformParent: {fileID: 0}
     m_Modifications:
     - target: {fileID: 682255376430898227, guid: fbf88c18005698542841b006bb4deecc, type: 3}
+      propertyPath: obj
+      value: 
+      objectReference: {fileID: 455665884}
+    - target: {fileID: 682255376430898227, guid: fbf88c18005698542841b006bb4deecc, type: 3}
       propertyPath: arch
       value: 
       objectReference: {fileID: 455665884}
@@ -1214,6 +1218,11 @@ Mesh:
     offset: 0
     size: 0
     path: 
+--- !u!20 &308980614 stripped
+Camera:
+  m_CorrespondingSourceObject: {fileID: 6244104960517068937, guid: f529a759870dfc442be0c578171aab00, type: 3}
+  m_PrefabInstance: {fileID: 852085838}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &455665883
 GameObject:
   m_ObjectHideFlags: 0
@@ -12214,7 +12223,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 3742102266111637751, guid: f529a759870dfc442be0c578171aab00, type: 3}
       propertyPath: m_LocalPosition.y
-      value: 1.64
+      value: 0.69
       objectReference: {fileID: 0}
     - target: {fileID: 3742102266111637751, guid: f529a759870dfc442be0c578171aab00, type: 3}
       propertyPath: m_LocalPosition.z
@@ -12260,6 +12269,10 @@ PrefabInstance:
       propertyPath: gravity
       value: 20
       objectReference: {fileID: 0}
+    - target: {fileID: 6772018526520652680, guid: f529a759870dfc442be0c578171aab00, type: 3}
+      propertyPath: playerCamera
+      value: 
+      objectReference: {fileID: 308980614}
     - target: {fileID: 6772018526520652680, guid: f529a759870dfc442be0c578171aab00, type: 3}
       propertyPath: runningSpeed
       value: 11.5
