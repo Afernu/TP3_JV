@@ -62,7 +62,7 @@ public class EnemyNavigation : MonoBehaviour
 
         while (normalizedTime < 1.0f)
         {
-            float yOffset = Mathf.Sin(Mathf.PI * normalizedTime) * 1.5f;
+            float yOffset = Mathf.Sin(Mathf.PI * normalizedTime) * 1f;
             navMeshAgent.transform.position = Vector3.Lerp(startPos, endPos, normalizedTime) + yOffset * Vector3.up;
             normalizedTime += Time.deltaTime / jumpDuration;
             yield return null;

@@ -10,7 +10,13 @@ public interface IInteractable
 
 public class Interactor : MonoBehaviour
 {
+    private Animator animator;
+    private bool isInteracting = false;
 
+    private void Awake()
+    {
+        animator = GetComponentInChildren<Animator>();
+    }
     private void Update()
     {
         if (Input.GetKeyDown(KeyCode.E))
@@ -23,8 +29,15 @@ public class Interactor : MonoBehaviour
                 if (collider.TryGetComponent(out IInteractable obj))
                 {
                     obj.Interact();
+                    animator.SetBool("IsPunching", true);
+                    isInteracting = true;
                 }
             }
+        }
+        else if (isInteracting)
+        {
+            animator.SetBool("IsPunching", false);
+            isInteracting = false;
         }
     }
     

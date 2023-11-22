@@ -5859,6 +5859,17 @@ Mesh:
     offset: 0
     size: 0
     path: 
+--- !u!114 &986943170 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 6185158531755722045, guid: f529a759870dfc442be0c578171aab00, type: 3}
+  m_PrefabInstance: {fileID: 1780553064}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b31f7e8216d7ff24e8cda1a381d5dfdf, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!43 &1002636387
 Mesh:
   m_ObjectHideFlags: 0
@@ -9016,7 +9027,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   container: {fileID: 737822906}
-  interactor: {fileID: 0}
+  interactor: {fileID: 986943170}
 --- !u!43 &1292550062
 Mesh:
   m_ObjectHideFlags: 0
