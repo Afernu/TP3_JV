@@ -3825,11 +3825,6 @@ MonoBehaviour:
   m_SelectedFaces: 
   m_SelectedEdges: []
   m_SelectedVertices: 
---- !u!20 &305700615 stripped
-Camera:
-  m_CorrespondingSourceObject: {fileID: 6244104960517068937, guid: f529a759870dfc442be0c578171aab00, type: 3}
-  m_PrefabInstance: {fileID: 1780553064}
-  m_PrefabAsset: {fileID: 0}
 --- !u!1 &347434303
 GameObject:
   m_ObjectHideFlags: 0
@@ -11064,18 +11059,6 @@ PrefabInstance:
     - target: {fileID: 3937026795308608217, guid: f529a759870dfc442be0c578171aab00, type: 3}
       propertyPath: m_Name
       value: Player
-      objectReference: {fileID: 0}
-    - target: {fileID: 6772018526520652680, guid: f529a759870dfc442be0c578171aab00, type: 3}
-      propertyPath: playerCamera
-      value: 
-      objectReference: {fileID: 305700615}
-    - target: {fileID: 6772018526520652680, guid: f529a759870dfc442be0c578171aab00, type: 3}
-      propertyPath: runningSpeed
-      value: 7
-      objectReference: {fileID: 0}
-    - target: {fileID: 6772018526520652680, guid: f529a759870dfc442be0c578171aab00, type: 3}
-      propertyPath: walkingSpeed
-      value: 4
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
