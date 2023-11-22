@@ -7,7 +7,7 @@ public class GameOverCollision : MonoBehaviour
 {
     private void OnTriggerEnter(Collider other)
     {
-        //Si la collision est faite par l'ennemi, loader la scene de game over
+        //Si la collisio est faite par l'ennemi, loader la scene de game over
         if (other.CompareTag("Enemy"))
         {
             IncreasingTime increaseTime = FindObjectOfType<IncreasingTime>();
