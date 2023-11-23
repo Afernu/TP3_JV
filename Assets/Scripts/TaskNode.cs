@@ -99,42 +99,6 @@ public class Wait : TaskBT
     }
 }
 
-public class Patrol : TaskBT
-{
-    private Vector3[] Destinations { get; set; }
-    private NavMeshAgent Agent { get; set; }
-    private Transform PlayerTransform { get; set; }
-    private int CurrentDestinationID { get; set; }
 
-    public Patrol(Vector3[] destinations, NavMeshAgent agent, Transform playerTransform)
-    {
-        Destinations = destinations;
-        Agent = agent;
-        PlayerTransform = playerTransform;
-    }
-
-    public override TaskState Execute()
-    {
-        float distanceToPlayer = Vector3.Distance(Agent.transform.position, PlayerTransform.position);
-        //change cela pour la distance de detection entre le joueur et le NPC
-        Agent.stoppingDistance = 10f;
-
-        if (distanceToPlayer <= Agent.stoppingDistance)
-        {
-            return TaskState.Success; 
-        }
-
-        Vector3 currentDestination = Destinations[CurrentDestinationID];
-        Agent.destination = currentDestination;
-
-        if (Vector3.Distance(currentDestination, Agent.transform.position) < Agent.stoppingDistance)
-        {
-            CurrentDestinationID = (CurrentDestinationID + 1) % Destinations.Length;
-            Debug.Log("Patrol Point: " + CurrentDestinationID);
-        }
-
-        return TaskState.Running;
-    }
-}
 
 

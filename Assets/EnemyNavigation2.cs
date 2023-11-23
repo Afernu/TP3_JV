@@ -26,7 +26,7 @@ public class EnemyNavigation2 : MonoBehaviour
 
             TaskBT[] patrolTask = new TaskBT[]
             {
-                new Patrol(patrolPoints.ToArray(), agent,playerTransform),
+                new Patrol(patrolPoints.ToArray(), agent,playerTransform,animator),
                 new DummyTask("Patrol Completed", TaskState.Success)
             };
 
@@ -38,7 +38,6 @@ public class EnemyNavigation2 : MonoBehaviour
 
             TaskNode patrolNode = new TaskNode("Patrol", patrolTask);
             TaskNode chaseNode = new TaskNode("Chase", chaseTask);
-            animator.SetBool("IsWalking", true);
 
             Node sequence0 = new Sequence("Sequence0", new[] { patrolNode, chaseNode });
 
@@ -93,51 +92,86 @@ public class EnemyNavigation2 : MonoBehaviour
         animator.SetBool("IsJumping", false);
     }
 }
+public class Patrol : TaskBT
+{
+    private Vector3[] Destinations { get; set; }
+    private NavMeshAgent Agent { get; set; }
+    private Transform PlayerTransform { get; set; }
+    private int CurrentDestinationID { get; set; }
+    private Animator Animator { get; set; }
+
+    public Patrol(Vector3[] destinations, NavMeshAgent agent, Transform playerTransform, Animator animator)
+    {
+        Destinations = destinations;
+        Agent = agent;
+        PlayerTransform = playerTransform;
+        Animator = animator;
+    }
+
+    public override TaskState Execute()
+    {
+        float distanceToPlayer = Vector3.Distance(Agent.transform.position, PlayerTransform.position);
+        Agent.stoppingDistance = 10f;
+
+        if (distanceToPlayer <= Agent.stoppingDistance)
+        {
+            return TaskState.Success;
+        }
+
+        Vector3 currentDestination = Destinations[CurrentDestinationID];
+        Agent.destination = currentDestination;
+
+        if (Vector3.Distance(currentDestination, Agent.transform.position) < Agent.stoppingDistance)
+        {
+            CurrentDestinationID = (CurrentDestinationID + 1) % Destinations.Length;
+            Debug.Log("Patrol Point: " + CurrentDestinationID);
+        }
+
+        Animator.SetBool("IsWalking", true);
+        Animator.SetBool("IsRunning", false);
+
+
+        return TaskState.Running;
+    }
+}
 
 public class ChasePlayer : TaskBT
 {
     private Transform playerTransform;
     private NavMeshAgent agent;
     private Animator animator;
-    private float patrolStoppingDistance = 5f;
-
+    private float patrolStoppingDistance = 5f; // Adjust this value as needed
     public ChasePlayer(Transform playerTransform, NavMeshAgent agent, Animator animator)
     {
         this.playerTransform = playerTransform;
         this.agent = agent;
         this.animator = animator;
     }
-
     public override TaskState Execute()
     {
         Debug.Log("EXECUTED CHASE");
         agent.destination = playerTransform.position;
-        animator.SetBool("IsWalking", false);
-        animator.SetBool("IsRunning", true);
-
         float distanceToPlayer = Vector3.Distance(agent.transform.position, playerTransform.position);
 
-        // Set stopping distance for chasing
         agent.stoppingDistance = 1f;
-
         if (distanceToPlayer <= agent.stoppingDistance)
         {
             Debug.Log("Game Over - Player Caught!");
             return TaskState.Success;
         }
-
         // If player is out of range, return to patrolling mode
         if (distanceToPlayer > patrolStoppingDistance)
         {
             Debug.Log("Player out of range - Returning to patrol");
             // Reset stopping distance for patrolling
             agent.stoppingDistance = patrolStoppingDistance;
-            //animator.SetBool("IsWalking", false); 
+            animator.SetBool("IsWalking", false);
+            animator.SetBool("IsRunning", true);
             return TaskState.Success; 
         }
-
         return TaskState.Running;
     }
 }
+
 
 
