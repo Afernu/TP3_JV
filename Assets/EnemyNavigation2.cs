@@ -13,7 +13,7 @@ public class EnemyNavigation2 : MonoBehaviour
 
     private void Start()
     {
-        GenerateRandomPoints generatedPoints = GameObject.FindObjectOfType<GenerateRandomPoints>();
+        GenerateRandomPoints generatedPoints = FindObjectOfType<GenerateRandomPoints>();
 
         if (generatedPoints != null)
         {
@@ -60,13 +60,46 @@ public class EnemyNavigation2 : MonoBehaviour
             yield return null;
         }
     }
+    private void Update()
+    {
+        HandleOffMeshLinkTraversal();
+    }
+    private void HandleOffMeshLinkTraversal()
+    {
+        if (agent.isOnOffMeshLink)
+        {
+            animator.SetBool("IsJumping", true);
+            StartCoroutine(CompleteOffMeshLink());
+        }
+    }
+
+    private IEnumerator CompleteOffMeshLink()
+    {
+        OffMeshLinkData linkData = agent.currentOffMeshLinkData;
+        Vector3 startPos = agent.transform.position;
+        Vector3 endPos = linkData.endPos + Vector3.up * agent.baseOffset;
+        float jumpDuration = 1f;
+        float normalizedTime = 0.0f;
+
+        while (normalizedTime < 1.0f)
+        {
+            float yOffset = Mathf.Sin(Mathf.PI * normalizedTime) * 1f;
+            agent.transform.position = Vector3.Lerp(startPos, endPos, normalizedTime) + yOffset * Vector3.up;
+            normalizedTime += Time.deltaTime / jumpDuration;
+            yield return null;
+        }
+
+        agent.CompleteOffMeshLink();
+        animator.SetBool("IsJumping", false);
+    }
 }
+
 public class ChasePlayer : TaskBT
 {
     private Transform playerTransform;
     private NavMeshAgent agent;
     private Animator animator;
-    private float patrolStoppingDistance = 5f; // Adjust this value as needed
+    private float patrolStoppingDistance = 5f;
 
     public ChasePlayer(Transform playerTransform, NavMeshAgent agent, Animator animator)
     {
@@ -79,7 +112,8 @@ public class ChasePlayer : TaskBT
     {
         Debug.Log("EXECUTED CHASE");
         agent.destination = playerTransform.position;
-        animator.SetBool("IsWalking", true);
+        animator.SetBool("IsWalking", false);
+        animator.SetBool("IsRunning", true);
 
         float distanceToPlayer = Vector3.Distance(agent.transform.position, playerTransform.position);
 
@@ -89,8 +123,6 @@ public class ChasePlayer : TaskBT
         if (distanceToPlayer <= agent.stoppingDistance)
         {
             Debug.Log("Game Over - Player Caught!");
-            // Trigger your game over logic here
-            // For example, you could call a method to handle the game over state
             return TaskState.Success;
         }
 
@@ -100,8 +132,8 @@ public class ChasePlayer : TaskBT
             Debug.Log("Player out of range - Returning to patrol");
             // Reset stopping distance for patrolling
             agent.stoppingDistance = patrolStoppingDistance;
-            animator.SetBool("IsWalking", false); // Stop walking animation if needed
-            return TaskState.Success; // Switch back to patrolling
+            //animator.SetBool("IsWalking", false); 
+            return TaskState.Success; 
         }
 
         return TaskState.Running;

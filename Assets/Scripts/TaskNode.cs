@@ -115,15 +115,15 @@ public class Patrol : TaskBT
 
     public override TaskState Execute()
     {
-        // Check if the player is in proximity
         float distanceToPlayer = Vector3.Distance(Agent.transform.position, PlayerTransform.position);
-        Agent.stoppingDistance = 5f;
+        //change cela pour la distance de detection entre le joueur et le NPC
+        Agent.stoppingDistance = 10f;
+
         if (distanceToPlayer <= Agent.stoppingDistance)
         {
-            return TaskState.Success; // Switch to chasing the player
+            return TaskState.Success; 
         }
 
-        // Continue patrolling
         Vector3 currentDestination = Destinations[CurrentDestinationID];
         Agent.destination = currentDestination;
 
@@ -133,7 +133,7 @@ public class Patrol : TaskBT
             Debug.Log("Patrol Point: " + CurrentDestinationID);
         }
 
-        return TaskState.Running; // Continue patrolling
+        return TaskState.Running;
     }
 }
 

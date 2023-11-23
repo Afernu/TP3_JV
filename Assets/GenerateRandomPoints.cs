@@ -55,8 +55,7 @@ public class GenerateRandomPoints : MonoBehaviour
 
     bool IsPointInNavMesh(Vector3 point)
     {
-        NavMeshHit hit;
-        return NavMesh.SamplePosition(point, out hit, 1.0f, NavMesh.AllAreas);
+        return NavMesh.SamplePosition(point, out _, 1.0f, NavMesh.AllAreas);
     }
 
     void CreatePatrolPoint(Vector3 position, int index)

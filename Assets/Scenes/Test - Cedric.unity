@@ -1745,6 +1745,10 @@ PrefabInstance:
       propertyPath: targetTransform
       value: 
       objectReference: {fileID: 0}
+    - target: {fileID: 3133400909442638175, guid: de894bc1ee02d4740af35e5c6f6d4beb, type: 3}
+      propertyPath: m_UpdateMode
+      value: 2
+      objectReference: {fileID: 0}
     - target: {fileID: 4117997136056334467, guid: de894bc1ee02d4740af35e5c6f6d4beb, type: 3}
       propertyPath: m_Speed
       value: 7
@@ -4064,8 +4068,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: df429823f0ea70346b9e4747f50a7b83, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  numberOfPoints: 5
-  radius: 20
+  numberOfPoints: 10
+  radius: 30
 --- !u!4 &1536526520
 Transform:
   m_ObjectHideFlags: 0
