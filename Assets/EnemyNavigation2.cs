@@ -56,7 +56,7 @@ public class EnemyNavigation2 : MonoBehaviour
         while (true)
         {
             behaviorTree.Evaluate();
-            yield return null;
+            yield return new WaitForSeconds(0.5f);
         }
     }
     private void Update()
@@ -140,38 +140,44 @@ public class ChasePlayer : TaskBT
     private Transform playerTransform;
     private NavMeshAgent agent;
     private Animator animator;
-    private float patrolStoppingDistance = 5f; // Adjust this value as needed
+    private float patrolStoppingDistance = 10f; // Adjust this value as needed
+
     public ChasePlayer(Transform playerTransform, NavMeshAgent agent, Animator animator)
     {
         this.playerTransform = playerTransform;
         this.agent = agent;
         this.animator = animator;
     }
+
     public override TaskState Execute()
     {
-        Debug.Log("EXECUTED CHASE");
+        Debug.Log("EXECUTING CHASE");
+
+        animator.SetBool("IsWalking", false);
+        animator.SetBool("IsRunning", true);
+
         agent.destination = playerTransform.position;
+        agent.stoppingDistance = 0.5f;
+        agent.speed = 10f;
         float distanceToPlayer = Vector3.Distance(agent.transform.position, playerTransform.position);
 
-        agent.stoppingDistance = 1f;
         if (distanceToPlayer <= agent.stoppingDistance)
         {
             Debug.Log("Game Over - Player Caught!");
-            return TaskState.Success;
         }
-        // If player is out of range, return to patrolling mode
+
         if (distanceToPlayer > patrolStoppingDistance)
         {
+            agent.speed = 7f; //reset la vitesse
             Debug.Log("Player out of range - Returning to patrol");
-            // Reset stopping distance for patrolling
-            agent.stoppingDistance = patrolStoppingDistance;
-            animator.SetBool("IsWalking", false);
-            animator.SetBool("IsRunning", true);
-            return TaskState.Success; 
+
+            return TaskState.Success;
         }
+
         return TaskState.Running;
     }
 }
+
 
 
 
