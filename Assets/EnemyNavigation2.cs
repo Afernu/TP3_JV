@@ -56,7 +56,7 @@ public class EnemyNavigation2 : MonoBehaviour
         while (true)
         {
             behaviorTree.Evaluate();
-            yield return new WaitForSeconds(0.5f);
+            yield return new WaitForSeconds(1f);
         }
     }
     private void Update()
@@ -113,6 +113,8 @@ public class Patrol : TaskBT
         float distanceToPlayer = Vector3.Distance(Agent.transform.position, PlayerTransform.position);
         Agent.stoppingDistance = 10f;
 
+        Animator.SetBool("IsWalking", true);
+
         if (distanceToPlayer <= Agent.stoppingDistance)
         {
             return TaskState.Success;
@@ -124,12 +126,9 @@ public class Patrol : TaskBT
         if (Vector3.Distance(currentDestination, Agent.transform.position) < Agent.stoppingDistance)
         {
             CurrentDestinationID = (CurrentDestinationID + 1) % Destinations.Length;
+            Animator.SetBool("IsWalking", false);
             Debug.Log("Patrol Point: " + CurrentDestinationID);
         }
-
-        Animator.SetBool("IsWalking", true);
-        Animator.SetBool("IsRunning", false);
-
 
         return TaskState.Running;
     }
@@ -153,7 +152,7 @@ public class ChasePlayer : TaskBT
     {
         Debug.Log("EXECUTING CHASE");
 
-        animator.SetBool("IsWalking", false);
+        animator.SetBool("IsWalking", true);
         animator.SetBool("IsRunning", true);
 
         agent.destination = playerTransform.position;
@@ -170,7 +169,8 @@ public class ChasePlayer : TaskBT
         {
             agent.speed = 7f; //reset la vitesse
             Debug.Log("Player out of range - Returning to patrol");
-
+            animator.SetBool("IsWalking", false);
+            animator.SetBool("IsRunning", false);
             return TaskState.Success;
         }
 
