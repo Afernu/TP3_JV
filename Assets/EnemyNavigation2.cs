@@ -139,7 +139,7 @@ public class ChasePlayer : TaskBT
     private Transform playerTransform;
     private NavMeshAgent agent;
     private Animator animator;
-    private float patrolStoppingDistance = 10f; // Adjust this value as needed
+    private float patrolStoppingDistance = 10f;
 
     public ChasePlayer(Transform playerTransform, NavMeshAgent agent, Animator animator)
     {
@@ -157,7 +157,7 @@ public class ChasePlayer : TaskBT
 
         agent.destination = playerTransform.position;
         agent.stoppingDistance = 0.5f;
-        agent.speed = 10f;
+        agent.speed = 7f;
         float distanceToPlayer = Vector3.Distance(agent.transform.position, playerTransform.position);
 
         if (distanceToPlayer <= agent.stoppingDistance)
@@ -167,7 +167,7 @@ public class ChasePlayer : TaskBT
 
         if (distanceToPlayer > patrolStoppingDistance)
         {
-            agent.speed = 7f; //reset la vitesse
+            agent.speed = 3f; //reset la vitesse
             Debug.Log("Player out of range - Returning to patrol");
             animator.SetBool("IsWalking", false);
             animator.SetBool("IsRunning", false);
