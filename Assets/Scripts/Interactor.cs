@@ -29,14 +29,14 @@ public class Interactor : MonoBehaviour
                 if (collider.TryGetComponent(out IInteractable obj))
                 {
                     obj.Interact();
-                    animator.SetBool("IsPunching", true);
+                    //animator.SetBool("IsPunching", true);
                     isInteracting = true;
                 }
             }
         }
         else if (isInteracting)
         {
-            animator.SetBool("IsPunching", false);
+            //animator.SetBool("IsPunching", false);
             isInteracting = false;
         }
     }

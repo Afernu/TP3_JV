@@ -6,7 +6,7 @@ using UnityEngine;
 
 [RequireComponent(typeof(CharacterController))]//Assure d'avoir le composant Character Controller attaché au GameObject
 
-public class FPSController : MonoBehaviour
+public class PlayerController : MonoBehaviour
 {
     public float walkingSpeed = 7.5f;
     public float runningSpeed = 11.5f;
@@ -45,7 +45,7 @@ public class FPSController : MonoBehaviour
         float verticalInput = Input.GetAxis("Vertical");
 
         // Appuyer sur "Left Shift" permet de courir
-        bool isRunning = Input.GetKey(KeyCode.LeftShift);
+        bool isRunning = Input.GetKey(KeyCode.LeftShift) && verticalInput > 0 && Mathf.Abs(horizontalInput) < 0.5f;
 
         if (isRunning && characterController.isGrounded)
             animator.SetBool("IsRunning", true);
