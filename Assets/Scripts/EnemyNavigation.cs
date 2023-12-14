@@ -7,6 +7,7 @@ public class EnemyNavigation : MonoBehaviour
     [SerializeField] private Transform targetTransform;
     private NavMeshAgent navMeshAgent;
     private Animator animator;
+    private bool startMoving = false;
 
     private void Awake()
     {
@@ -16,16 +17,12 @@ public class EnemyNavigation : MonoBehaviour
 
     private void Start()
     {
-        if (targetTransform != null)
-        {
-            navMeshAgent.destination = targetTransform.position;
-            animator.SetBool("IsWalking", true);
-        }
+        StartCoroutine(DelayedStart());
     }
 
     private void Update()
     {
-        if (targetTransform == null) return;
+        if (targetTransform == null || !startMoving) return;
 
         float distanceToTarget = Vector3.Distance(transform.position, targetTransform.position);
 
@@ -49,6 +46,19 @@ public class EnemyNavigation : MonoBehaviour
         {
             animator.SetBool("IsJumping", true);
             StartCoroutine(CompleteOffMeshLink());
+        }
+    }
+    private IEnumerator DelayedStart()
+    {
+        float delayTime = Random.Range(0f, 2f);
+        yield return new WaitForSeconds(delayTime);
+
+        if (targetTransform != null)
+        {
+            navMeshAgent.speed = Random.Range(1f, 3.5f);
+            navMeshAgent.destination = targetTransform.position;
+            animator.SetBool("IsWalking", true);
+            startMoving = true;
         }
     }
 
