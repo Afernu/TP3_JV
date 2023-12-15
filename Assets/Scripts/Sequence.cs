@@ -36,3 +36,64 @@ public class Sequence : Node
         return State;
     }
 }
+public class Selector : NodeU
+{
+    public Selector() : base() { }
+    public Selector(List<NodeU> children) : base(children) { }
+
+    public override NodeStateU Evaluate()
+    {
+        foreach (NodeU node in children)
+        {
+            switch (node.Evaluate())
+            {
+                case NodeStateU.FAILURE:
+                    continue;
+                case NodeStateU.SUCCESS:
+                    state = NodeStateU.SUCCESS;
+                    return state;
+                case NodeStateU.RUNNING:
+                    state = NodeStateU.RUNNING;
+                    return state;
+                default:
+                    continue;
+            }
+        }
+
+        state = NodeStateU.FAILURE;
+        return state;
+    }
+
+}
+public class SequenceU : NodeU
+{
+    public SequenceU() : base() { }
+    public SequenceU(List<NodeU> children) : base(children) { }
+
+    public override NodeStateU Evaluate()
+    {
+        bool anyChildIsRunning = false;
+
+        foreach (NodeU node in children)
+        {
+            switch (node.Evaluate())
+            {
+                case NodeStateU.FAILURE:
+                    state = NodeStateU.FAILURE;
+                    return state;
+                case NodeStateU.SUCCESS:
+                    continue;
+                case NodeStateU.RUNNING:
+                    anyChildIsRunning = true;
+                    continue;
+                default:
+                    state = NodeStateU.SUCCESS;
+                    return state;
+            }
+        }
+
+        state = anyChildIsRunning ? NodeStateU.RUNNING : NodeStateU.SUCCESS;
+        return state;
+    }
+
+}
