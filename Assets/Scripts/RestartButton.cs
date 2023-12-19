@@ -10,6 +10,6 @@ public class RestartButton : MonoBehaviour
     private void Update()
     {
         if (Input.GetKeyUp(restartKey))
-            SceneManager.LoadScene("Game");
+            SceneManager.LoadScene("Test - Vincent");
     }
 }

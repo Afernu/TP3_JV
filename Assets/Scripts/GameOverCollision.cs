@@ -5,14 +5,15 @@ using UnityEngine.SceneManagement;
 
 public class GameOverCollision : MonoBehaviour
 {
+    //IncreasingTime increaseTime = FindObjectOfType<IncreasingTime>();
+
     private void OnTriggerEnter(Collider other)
     {
         //Si la collision est faite par l'ennemi, loader la scene de game over
         if (other.CompareTag("Enemy"))
         {
-            IncreasingTime increaseTime = FindObjectOfType<IncreasingTime>();
 
-            increaseTime.GameOver();
+            //increaseTime.GameOver();
 
             SceneManager.LoadScene("GameOver");
 
