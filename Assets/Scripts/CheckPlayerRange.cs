@@ -6,7 +6,6 @@ public class CheckPlayerRange : NodeU
 {
     private static int layerMask = 1 << 3;
     private Transform transform;
-    private Animator animator;
 
     public CheckPlayerRange(Transform entity)
     {
@@ -22,7 +21,6 @@ public class CheckPlayerRange : NodeU
             if (colliders.Length > 0)
             {
                 parent.parent.SetData("target", colliders[0].transform);
-                //animator.SetBool("Walking", true);
                 state = NodeStateU.SUCCESS;
                 return state;
             }

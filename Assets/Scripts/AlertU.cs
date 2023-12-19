@@ -8,7 +8,7 @@ public class AlertU : BTree
     public Transform[] patrolPoints;
     public static float range = 5f; 
     public static float speed = 5f;
-    public static float chaseRange = 2f;
+    public static float chaseRange = 3f;
     protected override NodeU SetupT()
     {
 
